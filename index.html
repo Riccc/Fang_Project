@@ -1,11 +1,71 @@
 <!DOCTYPE html>
-<html>
+<html lang="zh-CN">
 <head>
-    <title>GTM 测试页面</title>
-    <!-- 插入 GTM 容器代码（后续步骤添加） -->
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>URL 参数解析</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 20px;
+    }
+    .container {
+      max-width: 600px;
+      margin: 0 auto;
+    }
+    input[type="text"] {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 10px;
+      font-size: 16px;
+    }
+    button {
+      padding: 10px 20px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+    .result {
+      margin-top: 20px;
+      padding: 10px;
+      background-color: #f9f9f9;
+      border: 1px solid #ddd;
+    }
+    .result p {
+      margin: 5px 0;
+    }
+  </style>
 </head>
 <body>
-    <h1>提取的 URL 参数：</h1>
-    <div id="output"></div>
+  <div class="container">
+    <h1>URL 参数解析</h1>
+    <input type="text" id="urlInput" placeholder="请输入 URL">
+    <button onclick="parseUrl()">解析参数</button>
+    <div id="result" class="result"></div>
+  </div>
+
+  <script>
+    function parseUrl() {
+      var url = document.getElementById('urlInput').value.trim();
+      var resultDiv = document.getElementById('result');
+      resultDiv.innerHTML = '';
+
+      if (!url) {
+        resultDiv.innerHTML = '<p>请输入 URL。</p>';
+        return;
+      }
+
+      var params = new URLSearchParams(url.split('?')[1]);
+      if (params.toString()) {
+        resultDiv.innerHTML = '<p>解析结果：</p>';
+        params.forEach(function(value, key) {
+          var p = document.createElement('p');
+          p.innerHTML = '<strong>' + key + ':</strong> ' + value;
+          resultDiv.appendChild(p);
+        });
+      } else {
+        resultDiv.innerHTML = '<p>该 URL 没有参数。</p>';
+      }
+    }
+  </script>
 </body>
 </html>
